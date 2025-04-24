@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GALAXY-MALL - Human Mimic Kit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .shapes {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .shape {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+        }
+
+        .square {
+            background: transparent;
+        }
+
+        .circle {
+            border-radius: 50%;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 17.3px solid #fff;
+            background: transparent;
+            border-top: none;
+        }
+
+        .hero {
+            margin-top: 4rem;
+            position: relative;
+            margin-bottom: 8rem;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .title {
+            font-size: 4rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .satellite-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, #0f0);
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .news-section {
+            margin-top: 6rem;
+            padding: 4rem 0;
+        }
+
+        .news-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .news-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .highlight-text {
+            color: #4CAF50;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .news-card {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            filter: sepia(100%) hue-rotate(60deg);
+        }
+
+        .news-card-content {
+            padding: 1.5rem;
+        }
+
+        .news-tag {
+            background: rgba(0, 255, 0, 0.2);
+            color: #4CAF50;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .news-description {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #4CAF50;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .footer-text {
+            margin-top: 4rem;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .space-text {
+            position: absolute;
+            right: 2rem;
+            bottom: 2rem;
+            text-align: right;
+        }
+
+        .space-text p {
+            color: #666;
+        }
+
+        .space-text .highlight {
+            color: #a67c52;
+        }
+
+        .additional-text {
+            max-width: 800px;
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .earth-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 6rem 0;
+            margin-bottom: 12rem;
+        }
+
+        .earth-container {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            perspective: 1000px;
+            transition: transform 0.3s ease;
+        }
+
+        .earth-image {
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0,255,0,0.4) 0%, transparent 70%),
+                radial-gradient(circle at 70% 70%, rgba(0,255,0,0.4) 0%, transparent 70%),
+                radial-gradient(circle at center, rgba(0,255,0,0.2) 0%, transparent 60%),
+                linear-gradient(to right, rgba(0,255,0,0.1), rgba(0,255,0,0.2));
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            animation: rotate 60s linear infinite;
+            box-shadow: 
+                inset 0 0 50px rgba(0,255,0,0.5),
+                0 0 50px rgba(0,255,0,0.3);
+        }
+
+        .earth-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 40% 40%, transparent 0%, rgba(0,0,0,0.8) 100%),
+                radial-gradient(circle at 60% 60%, transparent 0%, rgba(0,0,0,0.8) 100%);
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        .earth-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            color: #fff;
+            z-index: 2;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .earth-text p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin: 1rem 0;
+        }
+
+        .earth-text .highlight {
+            color: #4CAF50;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .reviews-section {
+            position: relative;
+            padding: 4rem 0;
+            margin-top: 8rem;
+            margin-bottom: 12rem;
+        }
+
+        .reviews-intro {
+            text-align: center;
+            margin-bottom: 6rem;
+        }
+
+        .reviews-intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviews-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .review-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 2rem;
+            border: 2px solid rgba(0, 255, 0, 0.3);
+            position: relative;
+        }
+
+        .review-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.2), transparent);
+            z-index: 1;
+        }
+
+        .review-content {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .reviewer-title {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+        }
+
+        .review-text {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .highlight-green {
+            color: #4CAF50;
+        }
+
+        .connection-line {
+            position: absolute;
+            left: 40px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, 
+                transparent,
+                rgba(0, 255, 0, 0.3) 10%,
+                rgba(0, 255, 0, 0.3) 90%,
+                transparent
+            );
+            z-index: -1;
+        }
+
+        .down-arrows {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(0, 255, 0, 0.3);
+        }
+
+        .failure-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, rgba(0, 255, 0, 0.1), transparent);
+            overflow: hidden;
+            margin-bottom: 12rem;
+        }
+
+        .failure-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .failure-text {
+            font-size: 2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .failure-highlight {
+            color: #4CAF50;
+            font-weight: normal;
+        }
+
+        .failure-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .failure-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                circle at center,
+                transparent 20%,
+                rgba(0, 40, 0, 0.4) 60%,
+                rgba(0, 40, 0, 0.8) 100%
+            );
+            z-index: 1;
+        }
+
+        .model-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4rem 0;
+        }
+
+        .model-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .model-text {
+            flex: 1;
+        }
+
+        .model-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .model-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ccc;
+            max-width: 400px;
+        }
+
+        .model-right {
+            text-align: right;
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .model-display {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .model-box {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .model-box-top {
+            top: 0;
+            transform: translateY(-50%);
+        }
+
+        .model-box-bottom {
+            bottom: 0;
+            transform: translateY(50%);
+        }
+
+        .box-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            transform-origin: center;
+            backface-visibility: hidden;
+        }
+
+        .box-front { transform: translateZ(100px); }
+        .box-back { transform: translateZ(-100px) rotateY(180deg); }
+        .box-right { transform: rotateY(90deg) translateZ(100px); }
+        .box-left { transform: rotateY(-90deg) translateZ(100px); }
+        .box-top { transform: rotateX(90deg) translateZ(100px); }
+        .box-bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        .model-label {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #0066ff;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateX(45deg) rotateY(45deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(45deg) rotateY(45deg);
+            }
+        }
+
+        .kit-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            margin-bottom: 4rem;
+        }
+
+        .kit-content {
+            max-width: 600px;
+        }
+
+        .kit-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .kit-divider {
+            width: 200px;
+            height: 2px;
+            background: rgba(0, 255, 0, 0.3);
+            margin: 2rem 0;
+        }
+
+        .kit-highlight {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .kit-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .kit-note {
+            font-size: 1.1rem;
+            color: #999;
+        }
+
+        .items-section {
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .items-description {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .items-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .item-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .item-circle:hover {
+            background: rgba(0, 255, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .item-text {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .item-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, rgba(0, 255, 0, 0.1), transparent);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <img src="logo.svg" alt="Galaxy Mall Logo">
+                <span class="logo-text">GALAXY-MALL</span>
+            </div>
+            <nav class="nav">
+                <a href="#about">About</a>
+                <a href="#sales">Sales</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#qa">Q&A</a>
+            </nav>
+        </header>
+
+        <div class="shapes">
+            <div class="shape square"></div>
+            <div class="shape circle"></div>
+            <div class="shape triangle"></div>
+        </div>
+
+        <main class="hero">
+            <div class="hero-content">
+                <p class="subtitle">외계인을 위한 지구인 흉내 키트</p>
+                <h1 class="title">Human<br>Mimic Kit :<br>for Aliens</h1>
+                <div class="description">
+                    <p>Disguise yourself. Blend into Kepharion-A Blue.</p>
+                    <p>Master human speech, habits, and emotions.</p>
+                    <p>No one will know you're not one of them.</p>
+                    <p>The Human Mimic Kit — conquer from within.</p>
+                </div>
+            </div>
+            <div class="satellite-image"></div>
+        </main>
+
+        <section class="news-section">
+            <h2 class="news-title">타행성 잠입 실습 세대</h2>
+            <p class="news-subtitle">34232년, 은하계 최상위권 대학원에서 <span class="highlight-text">타행성 문화 실습</span>은 거의 반필수가 되었습니다...</p>
+            
+            <div class="news-grid">
+                <div class="news-card">
+                    <img src="news1.jpg" alt="Galaxy News 1">
+                    <div class="news-card-content">
+                        <span class="news-tag">BREAKING NEWS</span>
+                        <p class="news-description">In the year 34232, cultural infiltration has become a core requirement...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <img src="news2.jpg" alt="Galaxy News 2">
+                    <div class="news-card-content">
+                        <span class="news-tag">TODAY NEWS</span>
+                        <p class="news-description">Infiltration programs now standard across Galactic Universities...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <img src="news3.jpg" alt="Galaxy News 3">
+                    <div class="news-card-content">
+                        <span class="news-tag">BREAKING NEWS</span>
+                        <p class="news-description">Cultural infiltration designated as essential curriculum...</p>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <p class="additional-text">
+                학생들은 다양한 지적 생명체가 거주하는 행성에 잠입하여, 원주민인 척 연기하면서 사회 구조를 직접 체험하고 분석해야 합니다.
+            </p>
+        </section>
+
+        <section class="earth-section">
+            <div class="earth-container">
+                <div class="earth-image">
+                    <div class="earth-overlay"></div>
+                </div>
+                <div class="earth-text">
+                    <p>그중에서도 <span class="highlight">지구</span>는 가장 난이도 높고,</p>
+                    <p>동시에 가장 인기있는 실습지로 손꼽힙니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reviews-section">
+            <div class="down-arrows">
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+                <div class="arrow"></div>
+            </div>
+            
+            <div class="reviews-intro">
+                <h2>그렇지만 인간으로 위장하는 일은<br>결코 쉬운 일이 아닙니다...</h2>
+            </div>
+
+            <div class="reviews-container">
+                <div class="connection-line"></div>
+                
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="alien1.svg" alt="에쁘릭뽀라스">
+                    </div>
+                    <div class="review-content">
+                        <h3 class="reviewer-name">에쁘릭뽀라스</h3>
+                        <p class="reviewer-title">(2391, 골푸르트 행성 거주)</p>
+                        <p class="review-text">"<span class="highlight-green">시간여행을 4시간 정도 늦었다고 자구인들이 아예나 짜증내더라고</span> 그들의 시간감각은 우리같은 외계인들에게 너무 어려워요."</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="alien2.svg" alt="꼴레모으짜르미용">
+                    </div>
+                    <div class="review-content">
+                        <h3 class="reviewer-name">꼴레모으짜르미용</h3>
+                        <p class="reviewer-title">(10271, 베델게우스 항성 거주)</p>
+                        <p class="review-text">"저는 지구인들이 음식을 먹으면서 <span class="highlight-green">서로 다른 감각을 느끼고 있는 것 물었어요.</span> 저에게는 마각을 느낄 수 있는 수용체 물기들이 없는데, 어떻게 지구의 식문화에 관련된 즐거운문을 쓰죠?"</p>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-avatar">
+                        <img src="alien3.svg" alt="껨뽀커">
+                    </div>
+                    <div class="review-content">
+                        <h3 class="reviewer-name">껨뽀커</h3>
+                        <p class="reviewer-title">(985, BPM 37093 항성 거주)</p>
+                        <p class="review-text">"<span class="highlight-green">인간들의 출입일과 온어들은 이해하기 너무 어려워요.</span> 저는 '아/바라는 단어가 그날 말 뒤에 붙이는 주임씨의 출근한 했었다고요."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="failure-section">
+            <div class="failure-overlay"></div>
+            <div class="failure-vignette"></div>
+            <div class="failure-content">
+                <p class="failure-text">많은 외계인들은</p>
+                <p class="failure-text">인간의 생활 습성을 이해하는 데에 실패하고</p>
+                <p class="failure-text"><span class="failure-highlight">다년간의 잠입 실기생활</span>을 이어나가곤 합니다.</p>
+            </div>
+        </section>
+
+        <section class="model-section">
+            <div class="model-content">
+                <div class="model-text">
+                    <h2 class="model-title">어렵고 힘든<br>지구인 위장.</h2>
+                    <p class="model-description">갤럭시 몰은<br>외계인분들이 가장 고충을 겪는 부분들을<br>해결해주기 위해 나섰습니다.</p>
+                </div>
+
+                <div class="model-display">
+                    <div class="model-box model-box-top">
+                        <div class="box-face box-front"></div>
+                        <div class="box-face box-back"></div>
+                        <div class="box-face box-right"></div>
+                        <div class="box-face box-left"></div>
+                        <div class="box-face box-top"></div>
+                        <div class="box-face box-bottom"></div>
+                    </div>
+                    <div class="model-label">3D모델<br>작업 예정</div>
+                    <div class="model-box model-box-bottom">
+                        <div class="box-face box-front"></div>
+                        <div class="box-face box-back"></div>
+                        <div class="box-face box-right"></div>
+                        <div class="box-face box-left"></div>
+                        <div class="box-face box-top"></div>
+                        <div class="box-face box-bottom"></div>
+                    </div>
+                </div>
+
+                <div class="model-right">
+                    이젠 더 이상<br>혼자 하지 마세요.
+                </div>
+            </div>
+        </section>
+
+        <section class="kit-section">
+            <div class="container">
+                <div class="kit-content">
+                    <h2 class="kit-title">지구인 흉내 키트</h2>
+                    <div class="kit-divider"></div>
+                    <p class="kit-description">총 <span class="kit-highlight">4개의 구성품</span>으로 이루어진<br>지구인 흉내 키트는 외계 잠입 전문가<br>들의 노하우가 담겨 있습니다.</p>
+                    <p class="kit-note">잠입 요원이 된 기분을 느껴보세요.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="items-section">
+            <div class="container">
+                <p class="items-description">클릭하면 상품의 상세 정보를 바로 볼 수 있습니다.</p>
+                
+                <div class="items-grid">
+                    <div class="item-circle">
+                        <p class="item-text">차원 동기화 알약</p>
+                    </div>
+                    <div class="item-circle">
+                        <p class="item-text">미각 치환 틀니</p>
+                    </div>
+                    <div class="item-circle">
+                        <p class="item-text">농담 해석 보청기</p>
+                    </div>
+                    <div class="item-circle">
+                        <p class="item-text">권총</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-text">
+            <p>Infiltration Kit: Become a Perfect Human Being - - For Intergalactic Aliens Agents Only</p>
+        </footer>
+
+        <div class="space-text">
+            <p>space</p>
+            <p>Earthling Imitation Kit:</p>
+            <p class="highlight">Alien Edition</p>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactivity to the earth
+        const earthContainer = document.querySelector('.earth-container');
+        
+        earthContainer.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = earthContainer.getBoundingClientRect();
+            const x = (e.clientX - left - width / 2) / 20;
+            const y = (e.clientY - top - height / 2) / 20;
+            
+            earthContainer.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+        });
+
+        earthContainer.addEventListener('mouseleave', () => {
+            earthContainer.style.transform = 'rotateY(0) rotateX(0)';
+        });
+    </script>
+</body>
+</html> 
